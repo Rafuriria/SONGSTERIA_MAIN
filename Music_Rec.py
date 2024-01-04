@@ -1,53 +1,14 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
-import av  #for video retrieved emotion from np
-import cv2 #for video
+import av 
+import cv2 
 import numpy as np 
 import mediapipe as mp 
 from keras.models import load_model
 import webbrowser
-from io import BytesIO
-import requests
-import tensorflow as tf
-import tempfile
-#import os
 
-#PORT = int(os.environ.get('PORT', 8501)) # Use the PORT environment variable or default to 8501 if running locally
-
-def music_rec_main():
-    st.header("Music Recommendation Based on User Emotion")
-
-# Function to load model from URL
-def load_model_from_url(url):
-    response = requests.get(url)
-    model_content = BytesIO(response.content)
-    
-    # Save the model to a temporary local file
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".h5") as temp_model_file:
-        temp_model_file.write(model_content.getvalue())
-        temp_model_path = temp_model_file.name
-    
-    # Load the model from the temporary local file
-    loaded_model = load_model(temp_model_path)
-    
-    return loaded_model
-
-# Load the labels.npy file
-# labels_url = "https://drive.google.com/uc?id=1PoL_B8sPR8CqvRJbG1Mi1Xy_QPeIwc1Y"
 model  = load_model("model.h5")
 label = np.load("labels.npy")
-
-# labels_url = 'labels.npy'
-# label = np.load(BytesIO(requests.get(labels_url).content))
-
-# # Load the model
-# model_url = "https://drive.google.com/uc?id=1rzB_G6hqOiVZgJ4OABzw606g-ArKlqtM"
-# model = load_model_from_url(model_url)
-
-# # Load the emotion from Google Drive
-# emotion_url = "https://drive.google.com/uc?id=1d0rBSvaqgfy-6Yf5nCALx01WuTMQQ27f"
-# emotion = np.load(BytesIO(requests.get(emotion_url).content))[0]
-
 holistic = mp.solutions.holistic
 hands = mp.solutions.hands
 holis = holistic.Holistic()
@@ -153,9 +114,9 @@ def my_function():
 		st.session_state["run"] = "true"
 	elif st.session_state["run"] == "true":
 			if btn_spotify:  # Check if the Spotify button is clicked
-				webbrowser.open(f"https://open.spotify.com/search/{artist}{emotion}{lang}")
+				webbrowser.open(f"https://open.spotify.com/search/{lang}{emotion}{artist}")
 			elif btn_youtube:  # Check if the YouTube button is clicked
-				webbrowser.open(f"https://music.youtube.com/search?q={artist}+{emotion}+song+{lang}")
+				webbrowser.open(f"https://www.youtube.com/results?search_query={lang}+{emotion}+song+{artist}")
 	np.save("emotion.npy", np.array([""]))
 	st.session_state["run"] = "false"
 if btn_spotify or btn_youtube:
@@ -169,6 +130,3 @@ if btn_spotify or btn_youtube:
 # 		np.save("emotion.npy", np.array([""]))
 # 		st.session_state["run"] = "false"
 
-#if __name__ == '__main__':
-#    st.run(port=PORT)
-	
