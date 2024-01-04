@@ -116,7 +116,7 @@ def my_function():
 			if btn_spotify:  # Check if the Spotify button is clicked
 				webbrowser.open(f"https://open.spotify.com/search/{lang}{emotion}{artist}")
 			elif btn_youtube:  # Check if the YouTube button is clicked
-				webbrowser.open(f"https://www.youtube.com/results?search_query={lang}+{emotion}+song+{artist}")
+				webbrowser.open(f"https://music.youtube.com/search?q={artist}+{lang}+{emotion}")
 	np.save("emotion.npy", np.array([""]))
 	st.session_state["run"] = "false"
 if btn_spotify or btn_youtube:
@@ -129,4 +129,5 @@ if btn_spotify or btn_youtube:
 # 		webbrowser.open(f"https://open.spotify.com/search/{lang}+{emotion}+song+{artist}")
 # 		np.save("emotion.npy", np.array([""]))
 # 		st.session_state["run"] = "false"
+	#https://music.youtube.com/search?q=taylor+swift+neutral+song+english
 
