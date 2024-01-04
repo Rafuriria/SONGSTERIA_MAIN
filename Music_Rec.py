@@ -33,16 +33,20 @@ def load_model_from_url(url):
     return loaded_model
 
 # Load the labels.npy file
-labels_url = "https://drive.google.com/uc?id=1PoL_B8sPR8CqvRJbG1Mi1Xy_QPeIwc1Y"
-label = np.load(BytesIO(requests.get(labels_url).content))
+# labels_url = "https://drive.google.com/uc?id=1PoL_B8sPR8CqvRJbG1Mi1Xy_QPeIwc1Y"
+model  = load_model("model.h5")
+label = np.load("labels.npy")
 
-# Load the model
-model_url = "https://drive.google.com/uc?id=1rzB_G6hqOiVZgJ4OABzw606g-ArKlqtM"
-model = load_model_from_url(model_url)
+# labels_url = 'labels.npy'
+# label = np.load(BytesIO(requests.get(labels_url).content))
 
-# Load the emotion from Google Drive
-emotion_url = "https://drive.google.com/uc?id=1d0rBSvaqgfy-6Yf5nCALx01WuTMQQ27f"
-emotion = np.load(BytesIO(requests.get(emotion_url).content))[0]
+# # Load the model
+# model_url = "https://drive.google.com/uc?id=1rzB_G6hqOiVZgJ4OABzw606g-ArKlqtM"
+# model = load_model_from_url(model_url)
+
+# # Load the emotion from Google Drive
+# emotion_url = "https://drive.google.com/uc?id=1d0rBSvaqgfy-6Yf5nCALx01WuTMQQ27f"
+# emotion = np.load(BytesIO(requests.get(emotion_url).content))[0]
 
 holistic = mp.solutions.holistic
 hands = mp.solutions.hands
